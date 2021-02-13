@@ -1,0 +1,30 @@
+language: node_js
+node_js: stable
+
+cache:
+  directories
+  - node_modules
+
+  install:
+    - npm install
+
+    script:
+    - hexo clean
+    - hexo g
+
+    after_script:
+    - cd ./public
+    - git init
+    - git config user.name "StreunerDeekman"
+    - git config user.email "3112641066@qq.com"
+    - git add .
+    - git commit -m "代码是自动部署"
+    - git push --force --quiet "https://${travis233}@${GH_REF}" main:gh-pages
+
+    branches:
+    only:
+    main
+
+    env:
+    global:
+    - GH_REF: github.com/StreunerDeekman/dazuocangku.git
